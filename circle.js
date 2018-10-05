@@ -3,6 +3,8 @@ class Circle {
 		this.side = side;
 		this.place = place;
 		this.point = createVector(0, (-scl + spc) / 2);
+		this.rotationspeed = radians(place / 4);
+		this.rotation = 0;
 		switch (side) {
 			case "left":
 				this.pos = createVector(0, place * scl);
@@ -23,7 +25,7 @@ class Circle {
 				if (showdebug > 3) {
 					push();
 					translate(this.pos.x, c.pos.y);
-					stroke(255);
+					stroke(255, 255 / 2);
 					strokeWeight(10);
 					point(x, y);
 					pop();
@@ -33,7 +35,8 @@ class Circle {
 	}
 
 	move() {
-		this.point.rotate(radians(this.place / 10));
+		this.rotation -= this.rotationspeed;
+		this.point.rotate(this.rotationspeed);
 	}
 
 	show() {
@@ -50,6 +53,7 @@ class Circle {
 			point(this.point.x, this.point.y);
 		}
 		if (showdebug > 2) {
+			stroke(255, 255 / 2)
 			strokeWeight(1);
 			switch (this.side) {
 				case "left":
