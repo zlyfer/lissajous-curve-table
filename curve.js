@@ -4,7 +4,7 @@ class Curve {
 		this.pos = createVector(x, y);
 	}
 
-	update(pos) {
+	updateShape(pos) {
 		this.shape.push(pos);
 	}
 
@@ -20,5 +20,4 @@ class Curve {
 		endShape();
 		pop();
 	}
-
 }

@@ -24,9 +24,7 @@ function draw() {
 	background(20);
 	for (let side in circles) {
 		circles[side].forEach(c => {
-			c.process();
-			c.show();
-			c.move();
+			c.update();
 		})
 	}
 	for (let i = 0; i < curves.length; i++) {
@@ -37,7 +35,7 @@ function draw() {
 		}
 	}
 	fps.html(frameRate().toFixed(1));
-	if (circles.left[0].rotation.toFixed(1) == -TAU.toFixed(1)) {
+	if (circles.left[0].fullRotations == 1) {
 		reset();
 	}
 }
@@ -46,7 +44,7 @@ function keyPressed() {
 	switch (key) {
 		case " ":
 			showdebug += 1;
-			if (showdebug > 4) {
+			if (showdebug > 5) {
 				showdebug = 0;
 			}
 			break;
@@ -55,10 +53,16 @@ function keyPressed() {
 			break;
 		case "ArrowUp":
 			scl -= 10;
+			if (scl < 20) {
+				scl = 20;
+			}
 			reset();
 			break;
 		case "ArrowDown":
 			scl += 10;
+			if (scl > 340) {
+				scl = 340;
+			}
 			reset();
 			break;
 		case "ArrowLeft":

@@ -3,8 +3,9 @@ class Circle {
 		this.side = side;
 		this.place = place;
 		this.point = createVector(0, (-scl + spc) / 2);
-		this.rotationspeed = radians(place / 4);
+		this.rotationspeed = radians(place / 3.6);
 		this.rotation = 0;
+		this.fullRotations = 0;
 		switch (side) {
 			case "left":
 				this.pos = createVector(0, place * scl);
@@ -15,13 +16,22 @@ class Circle {
 		}
 	}
 
+	update() {
+		this.process();
+		this.show();
+		this.move();
+		this.manageRotation();
+	}
+
 	process() {
 		if (this.side == "top") {
 			circles.left.forEach(c => {
 				let x = this.point.x + scl / 2;
 				let y = c.point.y + scl / 2;
-				let pointpos = createVector(x, y);
-				curves[c.place - 1][this.place - 1].update(pointpos);
+				curves[c.place - 1][this.place - 1].updateShape({
+					x,
+					y
+				});
 				if (showdebug > 3) {
 					push();
 					translate(this.pos.x, c.pos.y);
@@ -32,11 +42,6 @@ class Circle {
 				}
 			});
 		}
-	}
-
-	move() {
-		this.rotation -= this.rotationspeed;
-		this.point.rotate(this.rotationspeed);
 	}
 
 	show() {
@@ -64,6 +69,23 @@ class Circle {
 					break;
 			}
 		}
+		if (showdebug > 4) {
+			textAlign(CENTER, CENTER)
+			text(round(this.place), 0, 0);
+		}
 		pop();
+	}
+
+
+	move() {
+		this.rotation -= this.rotationspeed;
+		this.point.rotate(this.rotationspeed);
+	}
+
+	manageRotation() {
+		if (this.rotation.toFixed(0) == -radians(373).toFixed(0)) {
+			this.rotation = 0;
+			this.fullRotations++;
+		}
 	}
 }
