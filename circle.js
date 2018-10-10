@@ -2,7 +2,7 @@ class Circle {
 	constructor(side, place) {
 		this.side = side;
 		this.place = place;
-		this.point = createVector(0, (-scl + spc) / 2);
+		this.point = createVector(0, (scl - spc) / 2);
 		this.rotationspeed = radians(place / 3.6);
 		this.rotation = 0;
 		this.fullRotations = 0;
